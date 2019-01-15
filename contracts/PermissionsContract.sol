@@ -12,6 +12,9 @@ contract PermissionsContract {
 
     constructor() public {}
 
+    /**
+     * Grants permission for the given address
+     */
     function grantPermission(address forAddress) public returns (bool) {
         // Disallow granting permission for self
         require(forAddress != msg.sender, "ERR_OWN_ADDR");
@@ -21,6 +24,9 @@ contract PermissionsContract {
         return true;
     }
 
+    /**
+     * Revokes permission for the given address
+     */
     function revokePermission(address forAddress) public returns (bool) {
         // Don't allow revoke if permission has not been granted
         require(authorized[forAddress][msg.sender], "ERR_NOT_GRANTED");
@@ -30,6 +36,7 @@ contract PermissionsContract {
         return true;
     }
 
+    // Returns true the caller has permission for the given address
     function hasPermission(address entity) public view returns (bool) {
         return authorized[msg.sender][entity];
     }
